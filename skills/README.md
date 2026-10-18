@@ -47,8 +47,10 @@ tooling/install-skills.sh --all --client claude-code   # ~/.claude/skills instea
 
 One canonical source serves both clients: the `SKILL.md` frontmatter (`name`,
 `description`) is what Claude Code reads, and `agents/openai.yaml` carries the
-Codex interface. `--client` only changes the default destination. `--skill` accepts only a
-skill directory name from `--list`; paths, `.`, and `..` are rejected.
+Codex interface. `--client` only changes the default destination. `rsync` is optional: without
+it the installer copies with `cp` and `find` and produces the same result.
+`--skill` accepts only a skill directory name from `--list`; paths, `.`,
+and `..` are rejected.
 
 The [`ai-toolkit` CLI](../docs/install.md) installs the same canonical skills
 for Codex (`.agents/skills`) and Claude Code (`.claude/skills`) without
@@ -65,6 +67,15 @@ Install behavior:
 - Interactive runs prompt to skip, merge missing files only, or replace.
 - `--merge-existing` preserves local files and adds missing canonical files.
 - `--replace-existing` fully replaces the target skill and should be used deliberately.
+
+Source and target roots must not overlap (including aliases resolved through
+existing filesystem links); this is checked before installing any skill.
+Redundant path separators and dot components are normalized before link checks.
+For both copy backends, a write operation refuses a symlink at the target
+skills directory or skill destination, or any symlink inside an existing skill.
+This includes dangling links. Resolve these links explicitly before merging or
+replacing a skill; skipping an existing skill remains read-only. Use a trusted
+local destination that other processes do not modify during installation.
 
 ## Skill Catalog
 

@@ -50,6 +50,82 @@ need_command() {
   command -v "$1" >/dev/null 2>&1 || die "required command not found: $1"
 }
 
+# Remove redundant separators and dot components without resolving symlinks.
+# Parent components retain their filesystem meaning until physical_path checks.
+normalize_path() {
+  local path="$1" part result="" remainder
+  case "$path" in /*) ;; *) path="$PWD/$path" ;; esac
+  remainder="$path/"
+  while [ -n "$remainder" ]; do
+    part="${remainder%%/*}"
+    remainder="${remainder#*/}"
+    case "$part" in ""|.) continue ;; esac
+    result="$result/$part"
+  done
+  printf '%s\n' "${result:-/}"
+}
+
+# Resolve existing ancestors physically, appending missing directory components.
+# No directory is created while checking source/destination containment.
+physical_path() {
+  local path="$1" parent leaf
+  if [ -d "$path" ]; then
+    (cd "$path" && pwd -P)
+  else
+    parent="${path%/*}"
+    leaf="${path##*/}"
+    [ -n "$parent" ] || parent=/
+    parent="$(physical_path "$parent")" || return
+    if [ "$leaf" = ".." ]; then
+      parent="${parent%/*}"
+      printf '%s\n' "${parent:-/}"
+    else
+      printf '%s/%s\n' "${parent%/}" "$leaf"
+    fi
+  fi
+}
+
+# Copy a skill directory with rsync when it is installed, and with cp and find
+# otherwise, as in minimal containers and CI images. Modes match rsync -a:
+# install copies everything, merge copies only missing files, replace makes
+# dst an exact copy of src.
+copy_tree() {
+  local mode="$1"
+  local src="$2"
+  local dst="$3"
+
+  if command -v rsync >/dev/null 2>&1; then
+    case "$mode" in
+      install) rsync -a "$src/" "$dst/" ;;
+      merge) rsync -a --ignore-existing "$src/" "$dst/" ;;
+      replace) rsync -a --delete "$src/" "$dst/" ;;
+    esac
+    return
+  fi
+
+  case "$mode" in
+    install)
+      mkdir -p "$dst"
+      cp -pR "$src/." "$dst/"
+      ;;
+    merge)
+      (cd "$src" && find . -type d) | while IFS= read -r dir; do
+        mkdir -p "$dst/$dir"
+      done
+      (cd "$src" && find . ! -type d) | while IFS= read -r file; do
+        if [ ! -e "$dst/$file" ] && [ ! -L "$dst/$file" ]; then
+          cp -pR "$src/$file" "$dst/$file"
+        fi
+      done
+      ;;
+    replace)
+      rm -rf "$dst"
+      mkdir -p "$dst"
+      cp -pR "$src/." "$dst/"
+      ;;
+  esac
+}
+
 list_skills() {
   find "$source_dir" -mindepth 2 -maxdepth 2 -name SKILL.md -print |
     sed "s#^$source_dir/##; s#/SKILL.md\$##" |
@@ -146,21 +222,34 @@ sync_dir() {
     return
   fi
 
+  # Reject pre-existing links before either backend can traverse destination
+  # directories. Include dangling links; find does not follow directory links.
+  # Skipping an existing skill remains a read-only operation.
+  if [ "$mode" != "skip" ]; then
+    [ ! -L "${target_dir%/}" ] || die "target is a symlink: $target_dir"
+    [ ! -L "$dst" ] || die "skill destination is a symlink: $dst"
+    if [ -d "$dst" ]; then
+      local destination_links
+      destination_links="$(find "$dst" -type l -print)" || die "cannot inspect destination: $dst"
+      [ -z "$destination_links" ] || die "skill destination contains a symlink: $dst"
+    fi
+  fi
+
   mkdir -p "$target_dir"
   case "$mode" in
     install)
-      rsync -a "$src/" "$dst/"
+      copy_tree install "$src" "$dst"
       printf 'Installed %s -> %s\n' "$name" "$dst"
       ;;
     skip)
       printf 'Skipped existing %s at %s\n' "$name" "$dst"
       ;;
     merge)
-      rsync -a --ignore-existing "$src/" "$dst/"
+      copy_tree merge "$src" "$dst"
       printf 'Merged missing files for %s -> %s\n' "$name" "$dst"
       ;;
     replace)
-      rsync -a --delete "$src/" "$dst/"
+      copy_tree replace "$src" "$dst"
       printf 'Replaced %s -> %s\n' "$name" "$dst"
       ;;
     *)
@@ -233,7 +322,6 @@ esac
 [ -n "$target_dir" ] || target_dir="$default_target"
 
 need_command find
-need_command rsync
 
 [ -d "$source_dir" ] || die "source skills directory not found: $source_dir"
 
@@ -260,6 +348,14 @@ fi
 for skill in "${skills[@]}"; do
   validate_skill_name "$skill"
 done
+
+# Check the complete roots before even installing the shared bundle.
+target_dir="$(normalize_path "$target_dir")"
+[ ! -L "$target_dir" ] || die "target is a symlink: $target_dir"
+source_path="$(physical_path "$(normalize_path "$source_dir")")" || die "cannot resolve source"
+target_path="$(physical_path "$target_dir")" || die "cannot resolve target"
+case "${target_path%/}/" in "${source_path%/}/"*) die "source and target overlap" ;; esac
+case "${source_path%/}/" in "${target_path%/}/"*) die "source and target overlap" ;; esac
 
 if [ -d "$source_dir/_shared-project-ops" ]; then
   sync_dir "_shared-project-ops"

@@ -93,6 +93,10 @@ or evidence contracts require a major release and migration guidance.
   so background git maintenance started by a test's commits can no longer race
   the removal of its temporary repository.
 
+- `tooling/install-skills.sh` no longer requires `rsync`: `--list` and
+  `--dry-run` never needed it, and installs fall back to `cp` and `find` with
+  the same install, merge, and replace results when it is missing.
+
 - Activate `dependency-vulnerability` (Snyk Open Source) as advisory in this
   repository's `.proof/policy.yaml`. The Snyk workflow already ran and
   uploaded finding counts, but the control was not activated, so the
