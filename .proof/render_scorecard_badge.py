@@ -1366,6 +1366,17 @@ main{padding-block:48px 36px}
 .eyebrow{margin:0 0 8px;color:var(--accent);font-size:11px;font-weight:750;letter-spacing:1.7px;text-transform:uppercase}
 h1{margin:0;font-size:clamp(30px,4.5vw,42px);font-weight:650;line-height:1.2;letter-spacing:-1.6px}
 .intro{margin:12px 0 28px;color:var(--muted);max-width:680px;font-size:16px}
+.toolkit-overview{padding-bottom:36px;margin-bottom:36px;border-bottom:1px solid var(--line)}
+.overview-promise{max-width:760px;font-size:16px;margin:0 0 22px}
+.overview-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:22px 0}
+.overview-actions .primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.overview-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
+.overview-card{padding:22px;background:var(--paper);border:1px solid var(--line);border-radius:12px}
+.overview-card h2{margin:0 0 8px;font-size:16px;letter-spacing:-.2px}
+.overview-card p,.adoption-note{margin:0;color:var(--muted);font-size:14px}
+.adoption-note strong{color:var(--ink)}
+.scorecard-section{scroll-margin-top:24px}
+.report-title{margin:0;font-size:clamp(26px,4vw,34px);font-weight:650;line-height:1.2;letter-spacing:-1px}
 .good{--tone:#216341;--wash:#eef8f1;--edge:#c6e1cf}
 .caution{--tone:#815407;--wash:#fff7e8;--edge:#ecd5a7}
 .danger{--tone:#a02d36;--wash:#fff1f2;--edge:#ebc5c9}
@@ -1464,6 +1475,7 @@ footer img{display:block;max-width:100%;height:auto}
   main{padding-top:30px}.intro{font-size:14px}
   .status-panel{align-items:flex-start;padding:20px;gap:16px}
   .status-panel h2{font-size:18px}.decision dd{font-size:17px}
+  .overview-grid{grid-template-columns:1fr;gap:12px}.overview-card{padding:20px}
   .metrics{grid-template-columns:1fr;gap:12px}
   .check-detail{padding:18px}.checks-table th,.checks-table td{padding:7px 9px;white-space:normal}
   .checks-table .check-id{display:block;margin:2px 0 0}.checks-table .mode-cell{display:none}
@@ -1643,7 +1655,7 @@ def _html(metadata: dict[str, Any]) -> str:
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Latest published pull-request scorecard for {safe['repository']}: {safe['message']}.">
+  <meta name="description" content="AI is the accelerant. Assurance is mandatory. AI Software Toolkit connects standards, agent skills, and optional checks to revision-bound evidence. Published PR scorecard for {safe['repository']}: {safe['message']}.">
   <title>Latest PR Scorecard · {safe['repository']}</title>
   <style>{_REPORT_CSS}</style>
 </head>
@@ -1655,10 +1667,41 @@ def _html(metadata: dict[str, Any]) -> str:
   </div></div>
   <a class="repo-link" href="https://github.com/{safe['repository']}">View repository <span aria-hidden="true">↗</span></a>
 </div></header>
-<main class="shell" id="scorecard">
+<main class="shell">
+  <section class="toolkit-overview" aria-labelledby="toolkit-title">
+    <p class="eyebrow">AI Software Toolkit / standards, skills, and verification</p>
+    <h1 id="toolkit-title">AI is the accelerant.<br>Assurance is mandatory.</h1>
+    <p class="intro">AI turns directives into code faster than ever. Build assurance into
+      the work before changes ship. AI Software Toolkit provides the foundation:
+      clear standards, controlled agent skills, and checks connected to evidence.</p>
+    <p class="overview-promise"><strong>Your directives. Disciplined execution. Evidence before release.</strong></p>
+    <nav class="overview-actions" aria-label="Explore AI Software Toolkit">
+      <a class="button primary" href="https://github.com/ravisingh11/ai-software-toolkit#start-here">Start building assurance <span aria-hidden="true">↗</span></a>
+      <a class="button" href="https://github.com/ravisingh11/ai-software-toolkit/tree/main/skills">Browse skills</a>
+      <a class="button" href="https://github.com/ravisingh11/ai-software-toolkit-reference-app">Explore the reference app</a>
+      <a href="#scorecard">View this repository’s scorecard ↓</a>
+    </nav>
+    <div class="overview-grid">
+      <article class="overview-card"><h2>Define the boundaries</h2>
+        <p>Set expectations before execution. Human-readable standards and reusable
+          agent skills guide planning, implementation, review, security, QA, and release work.</p></article>
+      <article class="overview-card"><h2>Verify the work</h2>
+        <p>Run your build, tests, QA, and scanners against the change. Choose the checks,
+          thresholds, and enforcement that fit your repository’s risks.</p></article>
+      <article class="overview-card"><h2>Demand evidence before release</h2>
+        <p>Proof binds results to the evaluated revision. Inspect passing checks, failures,
+          and missing evidence before making a release decision.</p></article>
+    </div>
+    <p class="adoption-note"><strong>All toolkit checks are optional to adopt.</strong>
+      Installing skills does not run them or make checks required. Your team owns
+      its application, commands, review decisions, and release authority.</p>
+  </section>
+  <section class="scorecard-section" id="scorecard" aria-labelledby="scorecard-title" tabindex="-1">
   <p class="eyebrow">CI evidence / change assessment</p>
-  <h1>Latest PR Scorecard</h1>
-  <p class="intro">A clear view of the latest published pull-request evaluation.</p>
+  <h2 class="report-title" id="scorecard-title">Latest PR Scorecard</h2>
+  <p class="intro">Published pull-request evidence for <strong>{safe['repository']}</strong>.
+    Selected checks are included in this evaluation; selection does not prove they ran or passed.
+    This snapshot does not certify the application or current main.</p>
   <aside class="freshness" id="snapshot-freshness" data-snapshot="{snapshot}" data-freshness="unknown" aria-label="Snapshot freshness">
     <p id="snapshot-freshness-status" role="status" aria-live="polite">Freshness not checked. These are published snapshot results; refresh to request the latest publication.</p>
     <a class="button" id="snapshot-refresh" href="?snapshot-refresh={safe['source_run_id']}-{safe['source_run_attempt']}">Refresh latest</a>
@@ -1697,6 +1740,7 @@ def _html(metadata: dict[str, Any]) -> str:
   <footer><img src="proof-badge.svg" alt="{safe['message']}" width="216" height="20">
     <nav class="formats" aria-label="Report formats"><a href="scorecard.json">Summary JSON</a><a href="scorecard.md">Summary Markdown</a></nav>
   </footer>
+  </section>
 </main>
 <script type="text/javascript">{_FRESHNESS_SCRIPT}</script>
 </body></html>
