@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SEMGREP_IMAGE = "semgrep/semgrep@sha256:b94b53d02fd4a022f9eac4e2af1380f5c3c4c21400e79d3336bdff1d1db5e796"
 GITLEAKS_IMAGE = "ghcr.io/gitleaks/gitleaks@sha256:c00b6bd0aeb3071cbcb79009cb16a60dd9e0a7c60e2be9ab65d25e6bc8abbb7f"
 CORE_WORKFLOWS = {
+    "trivy.yml",
     "proof-scorecard.yml",
     "change-scope.yml",
     "pr-metadata.yml",
@@ -377,6 +378,17 @@ class ActionDistributionTests(unittest.TestCase):
         self.assertIn("attestations: write", text)
         self.assertIn("id-token: write", text)
         self.assertIn("subject-path:", text)
+
+    def test_independent_scans_are_opt_in_and_isolate_repository_imports(self) -> None:
+        trivy = (ROOT / "workflows/trivy.yml").read_text()
+        self.assertIn("python3 -I .proof/run_trivy.py", trivy)
+        self.assertIn("PROOF_TRIVY_DEPENDENCIES_ENABLED", trivy)
+        self.assertIn("PROOF_TRIVY_IAC_ENABLED", trivy)
+        self.assertNotIn("pull_request_target:", trivy)
+        self.assertNotIn("id-token: write", trivy)
+        self.assertNotIn("attestations: write", trivy)
+        self.assertIn("python3 -I .proof/prepare_release_attestation.py",
+                      (ROOT / "workflows/artifact-provenance.yml").read_text())
 
     def test_default_ruleset_does_not_claim_unactivated_checks(self) -> None:
         ruleset = json.loads((ROOT / "rulesets/default-branch-protection.json").read_text())

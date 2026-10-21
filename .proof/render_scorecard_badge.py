@@ -209,7 +209,8 @@ PUBLIC_CONTROLS = (
     ('runtime-assurance', 'Runtime Assurance', 'Verify runtime security and operational safeguards', 'Release & runtime'),
  )
 # Publish built-in identities only; custom configuration labels stay in the source report.
-PUBLIC_PROVIDERS = {'repository-validator': ('Repository Validators',
+PUBLIC_PROVIDERS = {'trivy-repository-vulnerabilities': ('Trivy Repository Dependencies', ('dependency-vulnerability',)),
+ 'trivy-repository-iac': ('Trivy Repository IaC', ('iac-misconfiguration',)), 'repository-validator': ('Repository Validators',
                           ('repository-validation', 'documentation-validation', 'repository-ground-truth')),
  'repository-change-scope': ('PR Size / Files & LOC', ('change-scope',)),
  'repository-pr-metadata': ('Repository PR Metadata', ('pr-metadata',)),
@@ -255,6 +256,11 @@ LIFECYCLE_PROVIDERS = {
 for _control, (_provider, _name, _kind) in LIFECYCLE_PROVIDERS.items():
     PUBLIC_PROVIDERS[_provider] = (_name, [_control])
 
+
+
+def _is_manual_lifecycle(row: dict[str, Any]) -> bool:
+    # Provider labels here are already projected through the built-in allowlist.
+    return row["id"] in LIFECYCLE_PROVIDERS and row.get("provider") != "Trivy Repository IaC"
 
 def _lifecycle_context(document: dict[str, Any], repository: str | None) -> dict[str, str]:
     """Validate the collector projection again before labeling typed public outcomes."""
@@ -837,7 +843,7 @@ def _control_details(document: dict[str, Any], repository: str | None = None) ->
                         "status": status if valid else "not_reported",
                         "separate_subject": "pull-request" if separate else None,
                         "diagnostic": _public_diagnostic(row) if valid else None,
-                        "evaluation_scope": "manual-lifecycle" if control_id in LIFECYCLE_PROVIDERS else "pull-request",
+                        "evaluation_scope": "manual-lifecycle" if _is_manual_lifecycle({"id": control_id, "provider": provider}) else "pull-request",
                         "provider": provider,
                         "verification_scope": labels.get(control_id),
                         **links,
@@ -892,7 +898,7 @@ def _unverified_note(row: dict[str, Any]) -> str:
     if diagnostic:
         return diagnostic["message"] + " This is not a passing result."
     control_id = row["id"]
-    if control_id in LIFECYCLE_PROVIDERS:
+    if _is_manual_lifecycle(row):
         kind = LIFECYCLE_PROVIDERS[control_id][2]
         subject = {"git-commit": "evaluated commit", "artifact": "verification artifact",
                    "environment": "verification environment"}[kind]
@@ -1001,7 +1007,7 @@ def _attention_html(controls: list[dict[str, Any]], breakdown: dict[str, Any]) -
     for row in flagged:
         label, tone = _result_label(row)
         name = html.escape(row["name"])
-        target_items = lifecycle_items if row["id"] in LIFECYCLE_PROVIDERS else items
+        target_items = lifecycle_items if _is_manual_lifecycle(row) else items
         target_items.append(f'<li><span class="size-result {tone}">{label}</span> <a href="#{_check_target(row["id"])}">{name}</a> <span class="attention-mode">{_CONTROL_MODES[row["mode"]]}</span></li>')
     if unnamed:
         plural = "s" if unnamed != 1 else ""
@@ -1198,7 +1204,7 @@ def _controls_html(controls: list[dict[str, Any]], run_url: str, scope: dict[str
                 measurements += _scope_html(scope)
             note_html = f'<p class="check-note">{note}</p>' if note else ''
             mode_html = '' if row["mode"] in _INACTIVE_STATUSES else f'<p class="check-mode">{_CONTROL_MODES[row["mode"]]}</p>'
-            if row["id"] in LIFECYCLE_PROVIDERS:
+            if _is_manual_lifecycle(row):
                 mode_html += '<p class="check-note">Manual lifecycle check · evaluated separately from PR checks.</p>'
             card = f'<article class="check-detail {tone}" id="check-{safe["id"]}" tabindex="-1"><div class="check-top"><h3>{safe["name"]} <code class="check-id">{safe["id"]}</code></h3><span class="size-result">{label}</span></div><p>{safe["purpose"]}</p><p class="check-provider">Provider: {provider_html}</p>{mode_html}{note_html}{run_facts}{measurements}<div class="check-links">{evidence}<a href="#checks-title">Back to checks ↑</a></div></article>'
             detail_status = "separate" if row.get("separate_subject") else row["status"]

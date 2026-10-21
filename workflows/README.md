@@ -523,3 +523,16 @@ The release example also starts with the existing Core/GitHub profile selection
 (8 checks, including artifact provenance); selecting a release operation does not
 automatically select deployment, runtime, or every optional artifact scanner.
 Those tools require an explicit project policy choice when they become applicable.
+
+## Independent provenance and Trivy starters
+
+`artifact-provenance.yml` supports exact published release-asset verification
+with just a release tag, separately from its compatible native build-provenance
+mode. `trivy.yml` supplies independent dependency, IaC and digest-pinned image
+scans, with an SBOM for images. Neither starter requires deployment or the
+advanced manual `lifecycle-verification.yml` workflow.
+
+**Trivy Repository Dependencies** (`trivy-repository-vulnerabilities`) and
+**Trivy Repository IaC** (`trivy-repository-iac`) are optional selectable PR
+providers. Existing provider selections and required checks are unchanged.
+See [setup and evidence boundaries](../docs/providers/independent-security.md).
