@@ -114,7 +114,7 @@ repository. This verifies configuration; it does not make dependency updates or
 other toolkit controls mandatory. GitHub enabling Dependabot and Proof verifying
 its settings are distinct states.
 
-Unverified cards and the Markdown report describe the evidence missing from the
+Cards marked Unable to verify and the Markdown report describe the evidence missing from the
 snapshot and give provider-specific next steps. Lifecycle evidence requires the
 manual Proof Lifecycle workflow for the evaluated revision. Guidance does not
 claim that a credential or input is definitely absent when the snapshot cannot
@@ -166,10 +166,23 @@ shows **Not configured** when trusted workflow settings establish missing config
 manual QA producer. These remain selected advisory checks with unavailable evidence,
 never passing checks. The public activation summary splits the unavailable-evidence total.
 
-**Unverified** is retained when activation is unknown or evidence is rejected, ambiguous,
+**Unable to verify** is retained when activation is unknown or evidence is rejected, ambiguous,
 pending, or unavailable due to collection errors. A no-wait setting alone does not prove
 a provider is disabled. Closed or mismatched lifecycle PR context remains unverified;
 it does not prove no manual run exists. Polyglot and lifecycle execution remain manual.
 Trusted collector callers may declare `--provider-activation PROVIDER=STATE`, where STATE
 is `disabled`, `not_configured`, or `awaiting_manual_run`. Declarations label only absent
 or provenance-validated skipped checks, preserving actual results and rejection reasons.
+
+The public scorecard uses **Unable to verify** for the remaining unknown or
+unusable evidence category, alongside **Passed**, **Failed**, **Blocked**,
+**Not configured**, **Disabled**, and **Awaiting manual run**. **Advisory** and
+**Enforced** describe policy mode independently of those statuses. Advisory
+results do not block the toolkit policy decision; enforced checks must pass,
+so an enforced failure, blocker, or unavailable result blocks that decision.
+GitHub merge enforcement additionally depends on required checks and rulesets.
+
+Zero-count categories are hidden in display summaries and evidence tables;
+empty table modes are omitted and empty cells show a dash. Underlying JSON
+counts and machine codes remain unchanged for compatibility. This presentation
+change does not enable services, change enforcement, or run manual workflows.
