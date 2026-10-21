@@ -417,3 +417,36 @@ checks or policy defaults. `PROOF_LIFECYCLE_ENABLED=true` opts the trusted PR
 scorecard into exact-subject receipt import. Missing evidence and actual failed
 results remain visible. See [lifecycle setup and trust](../docs/providers/lifecycle.md)
 for BuildKit, pinned fixture, sandbox, signature and bootstrap requirements.
+
+### Published scorecard identity and evidence gaps
+
+`proof-scorecard.yml` records a version 2 source binding containing the exact
+checked-out trusted runtime SHA alongside the PR head and base. The default-branch
+publisher validates that runtime's ancestry and passes only bounded PR/revision
+identity to the renderer. Version 1 historical artifacts remain supported; their
+unrecorded runtime is labeled unknown instead of inferred from the PR head.
+
+The public page identifies the evaluated PR, commit, PR base, policy/runtime,
+page renderer, and source evaluation start. Publishing does not rerun historical
+checks. Known missing, skipped, pending and revision-mismatched evidence conditions
+have safe public explanations; arbitrary provider reasons remain private.
+Validated PR metadata evidence retains a direct producer-result link.
+
+Manual lifecycle checks are grouped separately in the attention list and labeled
+on their cards. This presentation changes neither their selection nor their
+contribution to totals. Checks remain optional to adopt, polyglot verification
+remains manual, and GitHub required merge checks remain separate from the toolkit
+policy decision. On mobile the freshness notice stays in normal document flow.
+
+This repository explicitly selects every built-in check as advisory for its
+applicable change/release stage. This repository setting does not change the
+consumer baseline. Unconfigured providers remain unverified. Collection samples
+manual QA and native reviews without waiting for absent results; it also avoids
+waiting for optional providers whose workflow activation flags are off. A review
+submission can refresh the scorecard through the existing review event. Provider
+credentials and external service activation are separate repository decisions.
+
+The repository's event policy also permits the scorecard's existing
+`pull_request_review` trigger. Lifecycle PR-context rejection can mean that the
+PR has closed or that its head/base changed; the public explanation does not
+claim which condition failed when the collector reports them together.

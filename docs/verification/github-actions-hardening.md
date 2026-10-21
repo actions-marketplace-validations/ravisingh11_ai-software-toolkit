@@ -50,7 +50,8 @@ shell commands are outside GitHub's action allowlist enforcement.
 
 Active policy 8224 blocks `pull_request_target` outside the paths below while
 preserving other supported events. Active policy 8225 allows
-`pull_request_target`, `workflow_dispatch`, and `workflow_call` for these paths:
+`pull_request_target`, `pull_request_review`, `workflow_dispatch`, and
+`workflow_call` for these paths:
 
 ```text
 .github/workflows/ai-pr-review.yml
@@ -118,3 +119,30 @@ snapshot and give provider-specific next steps. Lifecycle evidence requires the
 manual Proof Lifecycle workflow for the evaluated revision. Guidance does not
 claim that a credential or input is definitely absent when the snapshot cannot
 establish the cause. Candidate-supplied reason strings are not published.
+
+### Snapshot identity and actionable results
+
+The public scorecard identifies its PR, evaluated commit, PR base, policy/runtime
+revision (when recorded), page renderer revision, and source evaluation start.
+Source bindings version 2 record the checked-out trusted runtime. Historical
+version 1 sources remain readable and explicitly say that runtime identity was
+not recorded. Updating the renderer does not rerun historical checks or select
+new policy. Configuration links use the recorded policy/runtime revision, falling back to
+the PR base for historical sources that did not record their runtime.
+
+Known collector conditions are projected as bounded public reason codes and
+reviewed explanations. Missing results, skipped producers, incomplete collection,
+and evidence rejected for a different revision remain unverified; none becomes
+a passing result. Arbitrary source reasons, section names, and private labels are
+not published. The standard missing `## Verification` requirement has an explicit
+public explanation. Validated metadata results retain a direct producer link.
+
+Manual lifecycle checks have a separate attention group and explicit scope labels.
+All selected checks still count in the unchanged totals. The toolkit policy
+decision is distinct from GitHub required merge checks. The freshness notice is
+non-sticky on mobile so it cannot cover tables or anchored results.
+
+This repository selects all built-in controls as advisory in their applicable
+stages, including functional QA, static quality, license compliance and all AI
+review roles. Missing evidence stays unverified. Consumer defaults remain opt-in,
+and provider activation, credentials and manual polyglot execution are unchanged.
