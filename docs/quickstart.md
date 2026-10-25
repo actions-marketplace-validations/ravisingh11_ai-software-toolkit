@@ -1,7 +1,7 @@
-# Proof quick start
+# Toolkit quick start
 
-Use the [`ai-toolkit` CLI](install.md) to preview and install the Proof component
-of AI Software Toolkit, configure real repository commands, and collect evidence
+Use the [`ai-toolkit` CLI](install.md) to preview and install Proof and the seven
+starter skills, configure real repository commands, and collect evidence
 locally and on pull requests. Git, Python 3.11+, and a POSIX shell are the
 prerequisites for this walkthrough. Docker and GitHub access are needed only for
 providers you choose to use. Missing, skipped, stale, or unconfigured evidence
@@ -32,17 +32,17 @@ For a small local Python consumer, use the
 [in-repository demo](../examples/python-demo/README.md). The steps below install
 into **your own repository**, using its commands and ground-truth documents.
 
-## 1. Preview and install Core
+## 1. Preview and install the starter set
 
 Clone the toolkit into a separate directory. From that checkout, discover the
 target's commands, preview the installation, and apply the reviewed plan:
 
 ```sh
-git clone --branch v2.2.1 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
+git clone --branch v2.3.0 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
 cd ai-software-toolkit
 python3 tooling/ai_toolkit discover --target /path/to/repo
-python3 tooling/ai_toolkit init --target /path/to/repo --components proof --preview
-python3 tooling/ai_toolkit init --target /path/to/repo --components proof --yes
+python3 tooling/ai_toolkit init --target /path/to/repo --clients codex --preview
+python3 tooling/ai_toolkit init --target /path/to/repo --clients codex --yes
 ```
 
 Review discovered commands against the tests and build your repository actually
@@ -51,8 +51,16 @@ uses. Discovery proposes configuration; it does not verify execution. Commit
 repository configuration. The [CLI guide](install.md) covers adding skills and
 QA, runtime-only installation, and managed updates.
 
-For advanced installation options below, use `tooling/install.py` from the same
-toolkit checkout. Its direct preview/apply equivalent is:
+For a fresh target, this installs Proof, seven starter skills under `.agents/skills/`,
+and 11 Core workflows covering 12 advisory checks. Use `--clients claude-code`
+instead for `.claude/skills/`. To install Proof alone, add `--components proof`
+to both `init` commands; that choice does not install starter skills.
+Check [workspace selection and skill discovery](skill-onboarding.md) before
+invoking a skill. Installation and a successful skill run are separate states.
+
+For advanced standalone Proof installations, `tooling/install.py` remains
+available from the same checkout. It retains the legacy full Core workflow
+default and does not install the CLI's seven-skill starter selection:
 
 ```sh
 python3 tooling/install.py --target /path/to/repo --dry-run
@@ -72,8 +80,8 @@ mappings, scope/metadata settings, and consumer-owned workflows. Review the
 diff before committing; provider definitions are refreshed while retaining
 repository-specific trusted paths.
 
-A normal install includes the Core runtime and Core GitHub Actions. To install
-only the runtime, use:
+A standalone install includes the Core runtime and legacy Core GitHub Actions.
+To install only the runtime with that installer, use:
 
 ```sh
 python3 tooling/install.py --target /path/to/repo --no-actions
@@ -89,7 +97,7 @@ The installer refuses to overwrite an existing pre-commit configuration.
 
 ### Claude Code setup
 
-For Claude Code skills, use the [README setup](../README.md#install-skills-for-codex-or-claude-code).
+For Claude Code skills, use the [client setup](skill-onboarding.md#client-locations).
 The project destination is `.claude/skills/`; Codex uses `.agents/skills/`.
 The same canonical `SKILL.md` definitions serve both clients.
 
