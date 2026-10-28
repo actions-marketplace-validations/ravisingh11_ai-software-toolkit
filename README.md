@@ -124,11 +124,18 @@ block-beta
   P8 --> H8
   H8 --> T8
 
-  classDef stage fill:#edf3ec,stroke:#55715a,color:#243529
-  classDef hook fill:#f4f4f0,stroke:#858879,color:#34372f
-  classDef capability fill:#eef3fa,stroke:#58718e,color:#243549
-  classDef limitation fill:#fff5df,stroke:#aa8238,color:#624b20,stroke-dasharray:5 4
+  classDef stage fill:#d1fae5,stroke:#047857,color:#064e3b
+  classDef hook fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+  classDef capability fill:#dbeafe,stroke:#1d4ed8,color:#172554
+  classDef limitation fill:#fef3c7,stroke:#b45309,color:#78350f,stroke-dasharray:5 4
 
+  classDef stageHeader fill:#065f46,stroke:#065f46,color:#ffffff
+  classDef hookHeader fill:#6b21a8,stroke:#6b21a8,color:#ffffff
+  classDef capabilityHeader fill:#1e40af,stroke:#1e40af,color:#ffffff
+
+  class PH stageHeader
+  class HH hookHeader
+  class TH capabilityHeader
   class P1,P2,P3,P4,P5,P6,P7,P8 stage
   class H1,H2,H3,H4,H5,H6,H7,H8 hook
   class T1,T4,T5,T6,T7,T8 capability
@@ -153,6 +160,90 @@ examples. Existing operations remain `change` and `release`; checkpoint names
 are guidance, not new CLI flags. All checks remain optional, Core advisory,
 and lifecycle/polyglot manual. The diagram installs no hooks, enables no
 triggers, and grants no action authority.
+
+## Two invocation hooks, visible in the output
+
+The diagram uses **teal for decisions**, **purple for invocation**, **blue for
+capabilities**, and **dashed amber for limitations**. Labels and line styles
+carry the meaning as well as color.
+
+Here, “hook” means an invocation point. These are **GitHub events**, not installed
+local Git hooks. The contrast is **before merge: PR update** versus
+**after merge: push to main**, using the same **Distribution Acceptance** workflow.
+
+```mermaid
+flowchart LR
+  PR["Hook 1: PR update<br/>pull_request: synchronize"] --> CHECK["Distribution Acceptance<br/>Run adopted checks"]
+  MAIN["Hook 2: Push to main<br/>push: refs/heads/main"] --> CHECK
+  CHECK --> OUTPUT["Output names invocation<br/>Actual tested revision and separate result"]
+  style PR fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+  style MAIN fill:#d1fae5,stroke:#047857,color:#064e3b
+  style CHECK fill:#dbeafe,stroke:#1d4ed8,color:#172554
+  style OUTPUT fill:#dbeafe,stroke:#1d4ed8,color:#172554
+```
+
+| Hook / invocation | What causes it | What the run describes |
+| --- | --- | --- |
+| `pull_request:synchronize` | Push a new commit to an open PR's branch. | PR head; output records the actual checkout and PR head/base. Open/reopen events also remain supported. |
+| `push` on `refs/heads/main` | A reviewed PR merges into main, or another permitted push updates main. | The actual main revision after the update; earlier PR results keep their original identities. |
+
+This repository adopts the `push` to `main` trigger in its maintainer-only
+Distribution Acceptance workflow. That workflow is not distributed as a consumer
+default; installed check selection and consumer workflow triggers are unchanged.
+All toolkit checks remain optional to adopt, Core advisory, and lifecycle/polyglot
+execution manual. These invocations do not deploy or publish anything.
+
+For a committed change on your open PR's branch:
+
+```sh
+git push
+gh pr checks --required
+```
+
+After review, merge only when required CI and repository requirements pass.
+Then inspect the **new** main-branch run:
+
+```sh
+gh run list --workflow distribution-acceptance.yml --branch main --event push --limit 5
+```
+
+Open **Record hook / invocation** in the run log or job summary. It identifies
+why the job ran, separately from its outcome. Illustrative output (revision
+values are placeholders):
+
+```text
+Hook / invocation: GitHub pull_request:synchronize
+Checkpoint: PR review readiness
+Git ref: refs/pull/<number>/merge
+Evidence scope: PR head
+Tested revision: <actual PR checkout SHA>
+PR head: <head SHA>
+PR base: <base SHA>
+Result: reported separately by the check; invocation is not a pass
+```
+
+```text
+Hook / invocation: GitHub push
+Checkpoint: Post-merge/main validation
+Git ref: refs/heads/main
+Evidence scope: Main revision
+Tested revision: <actual resulting main SHA>
+PR head: not supplied
+PR base: not supplied
+Result: reported separately by the check; invocation is not a pass
+```
+
+A push event does not identify a PR by itself: establish the merge relationship
+from the merged PR record and resulting commit. Do not relabel the PR result as
+the resulting main commit. The event revision and actual tested revision are
+recorded separately, along with the run/attempt link. Invocation labels are
+display context, not signed provenance or accepted Proof evidence.
+
+Explicit manual dispatch remains supported, labeled `GitHub workflow_dispatch`
+and **Explicit manual verification**; it is a separate invocation, not one of
+the two checkpoints above. No local tests are needed to inspect hosted runs.
+See the [workflow](https://github.com/ravisingh11/ai-software-toolkit/blob/main/.github/workflows/distribution-acceptance.yml)
+and [hosted runs](https://github.com/ravisingh11/ai-software-toolkit/actions/workflows/distribution-acceptance.yml).
 
 ## How to invoke it
 
@@ -235,7 +326,7 @@ block-beta
   B --> C
   C --> D
   D --> E
-  classDef toolkit fill:#eef3fa,stroke:#58718e,color:#243549
+  classDef toolkit fill:#dbeafe,stroke:#1d4ed8,color:#172554
   class B,E toolkit
 ```
 
