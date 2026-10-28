@@ -22,7 +22,7 @@ Use Git, Python 3.11+, and a POSIX shell. Preview the starter installation
 (Proof and seven skills) before applying it to your application repository:
 
 ```sh
-git clone --branch v2.3.1 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
+git clone --branch v2.3.2 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
 cd ai-software-toolkit
 python3 tooling/ai_toolkit discover --target /path/to/your-repo
 python3 tooling/ai_toolkit init --target /path/to/your-repo --clients codex --preview
@@ -57,6 +57,7 @@ Read down the first column for the process, and across each row for the
 invocation and relevant toolkit capabilities.
 
 ```mermaid
+%%{init: {"block": {"padding": 32}}}%%
 block-beta
   columns 3
 
