@@ -5,6 +5,10 @@ been checked, and does that evidence justify proceeding?** Git events provide
 opportunities to run checks. A checkpoint describes the decision being made.
 This guide serves both human contributors and agents.
 
+The v2.4.0 candidate's [checkpoint planner and receipt verifier](checkpoints.md)
+make placement and missing evidence inspectable. They do not change operations,
+scores or platform authorization. Exact staged execution is a separate adapter.
+
 All 33 catalog checks remain available to discover and optional to adopt.
 Core defaults remain advisory. A successful early check supports its recorded
 decision; merge, publication and deployment each retain their own evidence and
@@ -30,9 +34,12 @@ authorization boundaries. Lifecycle and polyglot execution remain manual.
 - **Recommended placement:** the checkpoint and catalog tables describe when
   a capability is useful. They do not install it, change policy selection,
   schedule execution or establish passing evidence.
-- **Future capabilities:** exact staged-snapshot evaluation, commit-message
-  validation and first-class checkpoint scheduling would need separately
-  designed producers/contracts. Commit-message conventions are repository
+- **Candidate support:** explicit staged-filesystem Semgrep/Gitleaks execution
+  records a separate index receipt; see [checkpoint commands](checkpoints.md).
+  It does not change the older checkout/history hook scopes or create
+  commit-bound Proof evidence.
+- **Future capabilities:** commit-message validation and first-class checkpoint
+  scheduling need separately designed producers/contracts. Commit-message conventions are repository
   guidance today, not a new built-in check. Do not fabricate `git-commit`
   evidence for an uncommitted index or working tree.
 
