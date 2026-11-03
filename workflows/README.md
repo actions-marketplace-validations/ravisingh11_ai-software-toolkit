@@ -1,6 +1,6 @@
 # Proof workflows
 
-These workflows provide Proof evidence within [AI Software Toolkit](../docs/vision.md).
+These workflows provide Proof evidence within [AI Engineering Guardrails](../docs/vision.md).
 For consumer-specific functional QA workflows, start with
 [QA bootstrap](../skills/qa-bootstrap/SKILL.md).
 
@@ -31,10 +31,10 @@ integration.
 ## Install sets
 
 ```sh
-python3 /path/to/ai-software-toolkit/tooling/install.py --target /path/to/repo
-python3 /path/to/ai-software-toolkit/tooling/install.py --target /path/to/repo --profile github
-python3 /path/to/ai-software-toolkit/tooling/install.py --target /path/to/repo --scorecard-badge
-python3 /path/to/ai-software-toolkit/tooling/install.py --target /path/to/repo --no-actions
+python3 /path/to/ai-engineering-guardrails/tooling/install.py --target /path/to/repo
+python3 /path/to/ai-engineering-guardrails/tooling/install.py --target /path/to/repo --profile github
+python3 /path/to/ai-engineering-guardrails/tooling/install.py --target /path/to/repo --scorecard-badge
+python3 /path/to/ai-engineering-guardrails/tooling/install.py --target /path/to/repo --no-actions
 ```
 
 The default installs Core runtime and Core workflows. `--profile github` adds

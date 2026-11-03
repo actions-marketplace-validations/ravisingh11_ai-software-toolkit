@@ -41,7 +41,7 @@ checks passed or the application is ready to release. See the
 [full illustrative report](../examples/sample-scorecard.md) and
 [status guide](../proof/control-status.md).
 
-Open the [toolkit scorecard](https://ravisingh11.github.io/ai-software-toolkit/)
+Open the [toolkit scorecard](https://ravisingh11.github.io/ai-engineering-guardrails/)
 or the [sample application's scorecard](https://ravisingh11.github.io/ai-software-toolkit-reference-app/)
 to inspect actual evidence. Each page identifies its repository, evaluated
 revision, and source CI run. Provider names link to configuration at that

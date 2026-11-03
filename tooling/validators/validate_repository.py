@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the canonical AI Software Toolkit repository."""
+"""Validate the canonical AI Engineering Guardrails repository."""
 
 from __future__ import annotations
 

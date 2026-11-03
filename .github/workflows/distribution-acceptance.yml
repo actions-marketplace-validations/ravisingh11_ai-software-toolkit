@@ -38,10 +38,10 @@ jobs:
         run: |
           mkdir -p legacy
           curl --fail --location --retry 3 \
-            https://github.com/ravisingh11/ai-software-toolkit/releases/download/v2.2.1/ai-toolkit.pyz \
+            https://github.com/ravisingh11/ai-engineering-guardrails/releases/download/v2.2.1/ai-toolkit.pyz \
             --output legacy/ai-toolkit.pyz
           curl --fail --location --retry 3 \
-            https://github.com/ravisingh11/ai-software-toolkit/releases/download/v2.2.1/ai-toolkit.pyz.sha256 \
+            https://github.com/ravisingh11/ai-engineering-guardrails/releases/download/v2.2.1/ai-toolkit.pyz.sha256 \
             --output legacy/ai-toolkit.pyz.sha256
           # The acceptance harness pins both digests before executing the baseline.
       - name: Focused activation and documentation regressions

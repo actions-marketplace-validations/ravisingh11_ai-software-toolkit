@@ -7,7 +7,7 @@ they do not establish the status of a newer revision or a consumer application.
 
 | Release | Scope |
 | --- | --- |
-| [v2.3.4](v2.3.4.md) | Draft candidate: actionable CI/CLI reporting; unpublished |
+| [v2.3.4](https://github.com/ravisingh11/ai-engineering-guardrails/releases/tag/v2.3.4) | Published 2026-10-29: actionable CI/CLI reporting; [preparation notes](v2.3.4.md) retain their original draft wording |
 | [v2.3.3](v2.3.3.md) | Separate PR/main report examples, an authentic README screenshot and aligned installation guidance |
 | [v2.3.2](v2.3.2.md) | SDLC checkpoint guidance, invocation reporting, diagrams and synchronized optional CodeQL pins |
 | [v2.3.1](v2.3.1.md) | Published 2026-10-25: starter onboarding, client discovery, skill routing and captured Codex verification |
@@ -18,7 +18,7 @@ they do not establish the status of a newer revision or a consumer application.
 | [v2.1.0](v2.1.0.md) | Shared CLI distribution, optional providers and lifecycle checks, scorecards, and Claude Code onboarding |
 | [v1.0.0](v1.0.0.md) | Initial stable Proof runtime and public contract |
 
-See [all published GitHub releases](https://github.com/ravisingh11/ai-software-toolkit/releases)
+See [all published GitHub releases](https://github.com/ravisingh11/ai-engineering-guardrails/releases)
 for tags and assets, and the [changelog](../../CHANGELOG.md) for the complete
 version history. Earlier changes do not all have separate release-note pages.
 

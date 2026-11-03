@@ -42,8 +42,8 @@ Clone the toolkit into a separate directory. From that checkout, discover the
 target's commands, preview the installation, and apply the reviewed plan:
 
 ```sh
-git clone --branch v2.3.3 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
-cd ai-software-toolkit
+git clone --branch v2.3.4 --depth 1 https://github.com/ravisingh11/ai-engineering-guardrails.git
+cd ai-engineering-guardrails
 python3 tooling/ai_toolkit discover --target /path/to/repo
 python3 tooling/ai_toolkit init --target /path/to/repo --clients codex --preview
 python3 tooling/ai_toolkit init --target /path/to/repo --clients codex --yes
@@ -535,7 +535,7 @@ under normal repository access.
 Publishing is optional reporting and never influences the
 scorecard decision or branch rules.
 
-The report page uses the AI Software Toolkit name and AI mark. It presents
+The report page uses the AI Engineering Guardrails name and AI mark. It presents
 the policy status and decision, separate active,
 enforced, and advisory counts, readable UTC timestamps, and a link to the
 source CI run. Verification details expand to show the subject digest; summary

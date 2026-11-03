@@ -52,6 +52,30 @@ def scorecard(
 
 
 class RendererTests(unittest.TestCase):
+    def test_rebrand_preserves_current_subject_and_historical_example_identities(self) -> None:
+        repository = 'ravisingh11/ai-engineering-guardrails'
+        run_url = f'https://github.com/{repository}/actions/runs/12345/attempts/2'
+        fixture = ROOT / 'tooling/tests/fixtures/checkpoint-examples.json'
+        original_fixture = fixture.read_bytes()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            metadata = self.render(self.write_source(root), root / 'published',
+                                   repository=repository, run_url=run_url)
+            page = (root / 'published/index.html').read_text()
+            published = json.loads((root / 'published/scorecard.json').read_text())
+        self.assertEqual(metadata['repository'], repository)
+        self.assertEqual(published['repository'], repository)
+        self.assertEqual((published['passed'], published['total']), (14, 14))
+        self.assertIn(run_url, page)
+        self.assertIn('<span class="brand-name">AI Engineering Guardrails</span>', page)
+        self.assertIn(f'https://github.com/{repository}#start-here', page)
+        self.assertIn(f'https://github.com/{repository}/tree/main/skills', page)
+        self.assertNotIn('https://github.com/ravisingh11/ai-software-toolkit#start-here', page)
+        self.assertIn('Historical examples from <strong>ravisingh11/ai-software-toolkit</strong>', page)
+        self.assertIn('40879663676', page)
+        self.assertIn('never contribute to the live scorecard totals', page)
+        self.assertEqual(fixture.read_bytes(), original_fixture)
+
     def test_checkpoint_examples_keep_separate_check_lists_and_sources(self) -> None:
         examples = MODULE._checkpoint_examples_html()
         pr = examples.split('id="checkpoint-pr-example"', 1)[1].split('</article>', 1)[0]
@@ -303,7 +327,7 @@ class RendererTests(unittest.TestCase):
             self.assertIn('id="snapshot-refresh" href="?snapshot-refresh=12345-2"', page)
             self.assertIn('<noscript><p>JavaScript is off.', page)
             self.assertIn('Freshness not checked.', page)
-            self.assertIn('<span class="brand-name">AI Software Toolkit</span>', page)
+            self.assertIn('<span class="brand-name">AI Engineering Guardrails</span>', page)
             self.assertNotIn('<span class="brand-name">Proof</span>', page)
 
     def provider_card(self) -> dict[str, Any]:

@@ -19,7 +19,7 @@ No separate repository or add-on release is created by this separation.
 From a Spec Kit initialized repository:
 
 ```bash
-specify preset add --dev /path/to/ai-software-toolkit/tooling/speckit/engineering-standards --priority 5
+specify preset add --dev /path/to/ai-engineering-guardrails/tooling/speckit/engineering-standards --priority 5
 specify preset list
 specify preset resolve spec-template
 ```
@@ -51,7 +51,7 @@ publication is a separate maintainer decision.
 ## Install From Package
 
 ```bash
-specify preset add --from https://github.com/ravisingh11/ai-software-toolkit/releases/download/v2.2.1/spec-kit-preset-engineering-standards-v1.0.0.zip --priority 5
+specify preset add --from https://github.com/ravisingh11/ai-engineering-guardrails/releases/download/v2.2.1/spec-kit-preset-engineering-standards-v1.0.0.zip --priority 5
 ```
 
 `--from` requires an HTTPS URL. Use `--dev` for local development installs.

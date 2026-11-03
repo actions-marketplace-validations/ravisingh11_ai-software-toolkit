@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-GUIDE_URL = "https://github.com/ravisingh11/ai-software-toolkit/blob/main/docs/activation.md"
+GUIDE_URL = "https://github.com/ravisingh11/ai-engineering-guardrails/blob/main/docs/activation.md"
 COMMANDS = {
     "build": "PROOF_BUILD_COMMAND", "unit-tests": "PROOF_UNIT_TEST_COMMAND",
     "format-and-lint": "PROOF_FORMAT_LINT_COMMAND",

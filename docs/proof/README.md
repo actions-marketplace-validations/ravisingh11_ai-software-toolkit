@@ -12,10 +12,10 @@
 | [Producer contract](producer-contract.md) | Produce revision-bound evidence |
 | [Migrating from Guardrails](migrating-from-guardrails.md) | Move a Guardrails installation to the Proof names |
 
-The composite GitHub Action is named **AI Software Toolkit Proof Attestation**
+Current source names the composite GitHub Action **AI Engineering Guardrails Proof Attestation**
 in [action.yml](../../action.yml). It evaluates revision-bound producer evidence
-against repository policy. Its workflow reference remains
-`ravisingh11/ai-software-toolkit@<reviewed-tag-or-commit>`.
+against repository policy. Use its canonical workflow reference
+`ravisingh11/ai-engineering-guardrails@<reviewed-tag-or-commit>`.
 
 ## Purpose
 

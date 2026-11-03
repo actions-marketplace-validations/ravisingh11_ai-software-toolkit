@@ -1,8 +1,10 @@
 # Social preview
 
-The repository social-preview artwork is stored at
-[`docs/assets/social-preview.png`](assets/social-preview.png). It is a visual
-summary of the project, not a status signal or security claim.
+The current AI Engineering Guardrails social-preview artwork is stored at
+[`docs/assets/social-preview-ai-engineering-guardrails.png`](assets/social-preview-ai-engineering-guardrails.png).
+It is a visual summary of the project, not a status signal or security claim.
+The earlier [`social-preview.png`](assets/social-preview.png) remains intact
+as historical artwork.
 
 The image is intentionally kept in the repository so maintainers can review
 branding changes through the same pull-request process as code and policy.
