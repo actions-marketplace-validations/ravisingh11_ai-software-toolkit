@@ -1,15 +1,18 @@
-# AI Software Toolkit
+# AI Engineering Guardrails
+
+Previously **AI Software Toolkit** (originally **Engineering Standards**).
+Use the [rename guide](docs/repository-rename.md) for existing clones and integrations.
 
 **AI is the accelerant. Assurance is mandatory.**
 
 Turn directives into reviewed changes with clear boundaries and evidence for
-what actually ran. AI Software Toolkit combines engineering standards, agent
+what actually ran. AI Engineering Guardrails combines engineering standards, agent
 skills, and **Proof**, which binds check results to the evaluated revision.
 Your repository owns its commands, acceptance criteria, and release decisions.
 
-[![Version](https://img.shields.io/github/v/release/ravisingh11/ai-software-toolkit?label=version)](https://github.com/ravisingh11/ai-software-toolkit/releases/latest)
-[![License](https://img.shields.io/github/license/ravisingh11/ai-software-toolkit?label=license)](LICENSE)
-[![Latest PR Scorecard](https://ravisingh11.github.io/ai-software-toolkit/proof-badge.svg)](https://ravisingh11.github.io/ai-software-toolkit/)
+[![Version](https://img.shields.io/github/v/release/ravisingh11/ai-engineering-guardrails?label=version)](https://github.com/ravisingh11/ai-engineering-guardrails/releases/latest)
+[![License](https://img.shields.io/github/license/ravisingh11/ai-engineering-guardrails?label=license)](LICENSE)
+[![Latest PR Scorecard](https://ravisingh11.github.io/ai-engineering-guardrails/proof-badge.svg)](https://ravisingh11.github.io/ai-engineering-guardrails/)
 
 **All checks are optional to adopt.** Core selects 12 advisory checks. Installing
 files, selecting a check, configuring it, executing it, and obtaining passing
@@ -31,8 +34,8 @@ Use Git, Python 3.11+, and a POSIX shell. Preview the starter installation
 (Proof and seven skills) before applying it to your application repository:
 
 ```sh
-git clone --branch v2.3.3 --depth 1 https://github.com/ravisingh11/ai-software-toolkit.git
-cd ai-software-toolkit
+git clone --branch v2.3.4 --depth 1 https://github.com/ravisingh11/ai-engineering-guardrails.git
+cd ai-engineering-guardrails
 python3 tooling/ai_toolkit discover --target /path/to/your-repo
 python3 tooling/ai_toolkit init --target /path/to/your-repo --clients codex --preview
 python3 tooling/ai_toolkit init --target /path/to/your-repo --clients codex --yes
@@ -105,7 +108,7 @@ block-beta
 
   block:toolkit
     columns 1
-    TH["AI Software Toolkit<br/>capabilities"]
+    TH["AI Engineering Guardrails<br/>capabilities"]
     T1["Review skills<br/>Test-gap analysis"]
     T2["Local static and secret checks<br/>Exact staged scope: future"]
     T3["Message conventions<br/>No built-in producer"]
@@ -200,7 +203,7 @@ Next: Resolve the finding; review current merge requirements separately.
 
 This is an illustrative example, not a claimed run. Acceptance reports describe
 **their own workflow steps**, not all selected checks or an authoritative Proof
-score. Inspect the separate [Proof Scorecard runs](https://github.com/ravisingh11/ai-software-toolkit/actions/workflows/proof-scorecard.yml)
+score. Inspect the separate [Proof Scorecard runs](https://github.com/ravisingh11/ai-engineering-guardrails/actions/workflows/proof-scorecard.yml)
 for evaluated policy evidence. The CLI's `check` presentation separately groups
 supplied evaluator results as **passed, failed, blocked, unverified/not run,
 stale evidence, and inactive**, preserving original statuses and scores.
@@ -208,8 +211,8 @@ Repair skills are recommended only when their project files are installed;
 a recommendation is not execution evidence.
 
 See [checkpoint report usage and limits](docs/sdlc-checkpoints.md#actionable-checkpoint-reports).
-[PR runs](https://github.com/ravisingh11/ai-software-toolkit/actions/workflows/distribution-acceptance.yml?query=event%3Apull_request)
-and [main-push runs](https://github.com/ravisingh11/ai-software-toolkit/actions/workflows/distribution-acceptance.yml?query=event%3Apush)
+[PR runs](https://github.com/ravisingh11/ai-engineering-guardrails/actions/workflows/distribution-acceptance.yml?query=event%3Apull_request)
+and [main-push runs](https://github.com/ravisingh11/ai-engineering-guardrails/actions/workflows/distribution-acceptance.yml?query=event%3Apush)
 retain their original identities. Main results require a new run after merge;
 passing main CI does not establish live deployment health.
 
@@ -300,8 +303,8 @@ display context, not signed provenance or accepted Proof evidence.
 Explicit manual dispatch remains supported, labeled `GitHub workflow_dispatch`
 and **Explicit manual verification**; it is a separate invocation, not one of
 the two checkpoints above. No local tests are needed to inspect hosted runs.
-See the [workflow](https://github.com/ravisingh11/ai-software-toolkit/blob/main/.github/workflows/distribution-acceptance.yml)
-and [hosted runs](https://github.com/ravisingh11/ai-software-toolkit/actions/workflows/distribution-acceptance.yml).
+See the [workflow](https://github.com/ravisingh11/ai-engineering-guardrails/blob/main/.github/workflows/distribution-acceptance.yml)
+and [hosted runs](https://github.com/ravisingh11/ai-engineering-guardrails/actions/workflows/distribution-acceptance.yml).
 
 ## How to invoke it
 
@@ -328,7 +331,7 @@ for client discovery and evidence of actual skill use.
 From your application checkout, use your toolkit source path:
 
 ```sh
-python3 /path/to/ai-software-toolkit/tooling/ai_toolkit doctor --target .
+python3 /path/to/ai-engineering-guardrails/tooling/ai_toolkit doctor --target .
 ```
 
 Doctor is read-only. It reports selection, configuration gaps, available
@@ -341,7 +344,7 @@ prerequisites, and a meaningful `origin/main` comparison, an example is:
 
 ```sh
 export PROOF_UNIT_TEST_COMMAND="npm test"
-python3 /path/to/ai-software-toolkit/tooling/ai_toolkit check \
+python3 /path/to/ai-engineering-guardrails/tooling/ai_toolkit check \
   --target . \
   --operation change \
   --revision "$(git rev-parse HEAD)" \
@@ -376,7 +379,7 @@ against the PR head revision:
 block-beta
   columns 1
   A["Hook<br/>PR opened, reopened, or new commits pushed"]
-  B["AI Software Toolkit<br/>Unit Tests workflow and command runner"]
+  B["AI Engineering Guardrails<br/>Unit Tests workflow and command runner"]
   C["Repository-owned test command<br/>Example: npm test"]
   D["GitHub check result<br/>Bound to the exact tested commit"]
   E["Trusted evidence collection and Proof<br/>Evaluate selected policy and publish the scorecard"]
@@ -487,7 +490,7 @@ Only selected, applicable checks affect scores. **Advisory / Enforced** is a
 separate choice; `ALLOW` means policy permits that snapshot, not release readiness.
 GitHub required merge checks are configured separately.
 
-Inspect the [live toolkit scorecard](https://ravisingh11.github.io/ai-software-toolkit/),
+Inspect the [live toolkit scorecard](https://ravisingh11.github.io/ai-engineering-guardrails/),
 [full illustrative report](docs/examples/sample-scorecard.md), and
 [reading evidence guide](docs/proof/reading-evidence.md) for revision binding,
 freshness, result states, and provider limitations. Historical verification

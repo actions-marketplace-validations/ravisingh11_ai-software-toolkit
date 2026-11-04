@@ -15,7 +15,7 @@ import subprocess
 from pathlib import Path
 from urllib.parse import quote, urlsplit
 
-GUIDE = "https://github.com/ravisingh11/ai-software-toolkit/blob/main/docs/activation.md"
+GUIDE = "https://github.com/ravisingh11/ai-engineering-guardrails/blob/main/docs/activation.md"
 GROUPS = ("Passed", "Failed", "Blocked", "Unverified / not run", "Stale evidence", "Inactive")
 SKILL_CAPABILITIES = {
     "fix-ci": ("build", "unit-tests", "format-and-lint", "migration-validation"),

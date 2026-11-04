@@ -1,4 +1,4 @@
-name: AI Software Toolkit Proof Attestation
+name: AI Engineering Guardrails Proof Attestation
 description: Evaluate revision-bound producer evidence against a repository policy
 inputs:
   policy-file:

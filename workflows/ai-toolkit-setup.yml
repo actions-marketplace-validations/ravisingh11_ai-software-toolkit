@@ -75,7 +75,7 @@ jobs:
           mkdir -p "${RUNNER_TEMP}/ai-toolkit"
           curl --fail --silent --show-error --location \
             --output "${RUNNER_TEMP}/ai-toolkit/ai-toolkit.pyz" \
-            "https://github.com/ravisingh11/ai-software-toolkit/releases/download/${TOOLKIT_TAG}/ai-toolkit.pyz"
+            "https://github.com/ravisingh11/ai-engineering-guardrails/releases/download/${TOOLKIT_TAG}/ai-toolkit.pyz"
           echo "${ARCHIVE_SHA256}  ${RUNNER_TEMP}/ai-toolkit/ai-toolkit.pyz" | sha256sum --check --strict
 
       - name: Preview the installation
@@ -108,7 +108,7 @@ jobs:
             echo "Nothing to install; the repository already matches the toolkit." >> "${GITHUB_STEP_SUMMARY}"
             exit 0
           fi
-          git commit -m "chore: set up AI Software Toolkit ${TOOLKIT_TAG}"
+          git commit -m "chore: set up AI Engineering Guardrails ${TOOLKIT_TAG}"
           git push --set-upstream origin "${branch}"
-          gh pr create --title "chore: set up AI Software Toolkit ${TOOLKIT_TAG}" \
+          gh pr create --title "chore: set up AI Engineering Guardrails ${TOOLKIT_TAG}" \
             --body-file "${RUNNER_TEMP}/ai-toolkit/preview.txt" --head "${branch}"

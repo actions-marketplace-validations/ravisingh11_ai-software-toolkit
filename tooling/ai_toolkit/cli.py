@@ -492,7 +492,7 @@ def ensure_gitignore(target: Path, found: dict[str, Any]) -> bool:
         return False
     existing = path.read_text(encoding="utf-8") if path.is_file() else ""
     separator = "" if not existing or existing.endswith("\n") else "\n"
-    path.write_text(existing + separator + "# AI Software Toolkit scan artifacts\n" + "".join(rule + "\n" for rule in additions), encoding="utf-8")
+    path.write_text(existing + separator + "# AI Engineering Guardrails scan artifacts\n" + "".join(rule + "\n" for rule in additions), encoding="utf-8")
     return True
 
 
@@ -1076,7 +1076,7 @@ def cmd_checkpoint(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="ai-toolkit", description="AI Software Toolkit: install, diagnose, check, and update Proof, skills, and QA.")
+    parser = argparse.ArgumentParser(prog="ai-toolkit", description="AI Engineering Guardrails: install, diagnose, check, and update Proof, skills, and QA.")
     parser.add_argument("--version", action="version", version=f"%(prog)s {VERSION} ({revision()})")
     subparsers = parser.add_subparsers(dest="command", required=True)
 

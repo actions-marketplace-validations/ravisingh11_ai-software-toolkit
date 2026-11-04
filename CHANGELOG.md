@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to AI Software Toolkit are documented here.
+All notable changes to AI Engineering Guardrails are documented here.
 
 The project follows [Semantic Versioning](https://semver.org/). Starting with
 1.0, incompatible changes to the documented public runtime, configuration,
@@ -10,14 +10,19 @@ or evidence contracts require a major release and migration guidance.
 
 ### v2.4.0 candidate
 
+- Rename the project to **AI Engineering Guardrails** and use `ravisingh11/ai-engineering-guardrails` for current links, setup and report branding. Keep CLI/configuration identifiers, Proof contracts, published assets and recorded evidence identities unchanged.
+
 - Add read-only checkpoint planning using the existing 33-check catalog and provider selections.
 - Add portable package manifests and separately bound checkpoint receipts with explicit integrity, subject, freshness and authority limits.
 - Preserve existing Proof subjects, operations, decisions, scores, installed skill ownership and optional/advisory defaults.
 - Add explicit staged-snapshot Semgrep/Gitleaks adapters, preserving index/worktree contents and invalidating results after index changes; unsupported or missing producers remain blocked.
 
-## [2.3.4] - Unreleased
+## [2.3.4] - 2026-10-29
 
-Draft candidate; v2.3.3 remains the latest published release.
+Published from reviewed source `2da5654836210fc484399cbc82c85fd821bc666d`.
+The [published release](https://github.com/ravisingh11/ai-engineering-guardrails/releases/tag/v2.3.4)
+retains its immutable assets; [preparation notes](docs/releases/v2.3.4.md) retain
+their historical draft description.
 
 - Add final SDLC job summaries and retained JSON/Markdown reports to maintainer acceptance, with invocation, exact checkout, PR/base identities, evidence links and next actions.
 - Present CLI evaluator results in separate passed, failed, blocked, unverified/not-run, stale and inactive groups, retaining original statuses, scores and machine-readable output.

@@ -167,8 +167,14 @@ def published_tuple(document: dict[str, Any] | None) -> tuple[str, int, int] | N
     )
 
 
+def previous_published_repository(repository: str, repo_record: dict[str, Any]) -> str | None:
+    if repository == "ravisingh11/ai-engineering-guardrails" and type(repo_record.get("id")) is int and repo_record["id"] == 1348591078:
+        return "ravisingh11/ai-software-toolkit"
+    return None
+
+
 def validate_published_scorecard(
-    document: dict[str, Any] | None, repository: str
+    document: dict[str, Any] | None, repository: str, *, previous_repository: str | None = None
 ) -> dict[str, Any] | None:
     if document is None:
         return None
@@ -178,7 +184,8 @@ def validate_published_scorecard(
         raise ValueError("published scorecard version must be 1")
     if (
         document.get("operation") != "change"
-        or document.get("repository") != repository
+        or (document.get("repository") != repository and
+            (previous_repository is None or document.get("repository") != previous_repository))
     ):
         raise ValueError("published scorecard identity does not match")
     status = document.get("status")
@@ -696,8 +703,13 @@ def reconcile(
     base_url, private_pages = publication_destination(repository, repo_record, pages_access, client)
     # Private Pages requires interactive authentication. Never send the API token
     # to a Pages host or probe the public github.io fallback for private reports.
+    # A renamed repository may retain an older Pages snapshot. Permit its
+    # original identity only for this known repository ID; preserve the
+    # snapshot's original identity and freshness tuple for comparison.
+    previous_repository = previous_published_repository(repository, repo_record)
     published = None if private_pages else validate_published_scorecard(
-        published_loader(f"{base_url}scorecard.json"), repository
+        published_loader(f"{base_url}scorecard.json"), repository,
+        previous_repository=previous_repository,
     )
     current = published_tuple(published)
     runs = completed_runs(client, repository)

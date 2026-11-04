@@ -26,7 +26,7 @@ LOCK_NAME = "toolkit.lock.json"
 LOCK_VERSION = 1
 INSTALL_SETS = ("starter", "full")
 
-TOML_TEMPLATE = """# AI Software Toolkit configuration. Policy and provider selection live in
+TOML_TEMPLATE = """# AI Engineering Guardrails configuration. Policy and provider selection live in
 # .proof/ and are changed with .proof/configure.py; repository
 # commands live in GitHub repository variables, never in this file.
 

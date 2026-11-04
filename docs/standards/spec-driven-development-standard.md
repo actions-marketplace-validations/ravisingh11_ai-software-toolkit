@@ -34,14 +34,14 @@ versioned at 1.0.0. Proof and the seven starter skills do not require it.
 From a Spec Kit initialized consumer, use the preset from a source checkout:
 
 ```sh
-specify preset add --dev /path/to/ai-software-toolkit/tooling/speckit/engineering-standards --priority 5
+specify preset add --dev /path/to/ai-engineering-guardrails/tooling/speckit/engineering-standards --priority 5
 specify preset list
 specify preset resolve spec-template
 ```
 
 Use the upstream constitution, specify, clarify, plan, tasks, analyze, and
 implement commands only when that workflow suits the repository. A previously
-published [v2.2.1 preset asset](https://github.com/ravisingh11/ai-software-toolkit/releases/download/v2.2.1/spec-kit-preset-engineering-standards-v1.0.0.zip)
+published [v2.2.1 preset asset](https://github.com/ravisingh11/ai-engineering-guardrails/releases/download/v2.2.1/spec-kit-preset-engineering-standards-v1.0.0.zip)
 remains available; the preset README covers explicit packaging and installation.
 
 ## Related standards

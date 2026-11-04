@@ -1130,7 +1130,7 @@ def _opportunity_card(row: dict[str, Any]) -> str:
             '<li>Add the producer workflow and configure its required inputs or credentials.</li>'
             f'<li>Select <code>{control_id}</code> as <code>advisory</code> under <code>overrides.{operation}</code> in <code>.proof/policy.yaml</code>.</li>'
             '<li>Run the producer for the matching revision and evaluate its applicable stage. Manual producers remain manual.</li></ol>'
-            f'<div class="check-links">{setup}<a href="https://github.com/ravisingh11/ai-software-toolkit/blob/main/workflows/README.md">Adoption guide ↗</a>'
+            f'<div class="check-links">{setup}<a href="https://github.com/ravisingh11/ai-engineering-guardrails/blob/main/workflows/README.md">Adoption guide ↗</a>'
             '<a href="#checks-title">Back to checks ↑</a></div></article>')
 
 
@@ -2028,6 +2028,8 @@ _REFERENCE_CHECKPOINT_EXAMPLES = (
 )
 
 
+# Recorded examples retain the repository identity used by their original runs.
+# A project rename changes current navigation, not historical evidence subjects.
 def _checkpoint_examples_html(repository: str = "ravisingh11/ai-software-toolkit") -> str:
     if repository == "ravisingh11/ai-software-toolkit-reference-app":
         examples = _REFERENCE_CHECKPOINT_EXAMPLES
@@ -2137,7 +2139,7 @@ def _html(metadata: dict[str, Any]) -> str:
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="AI is the accelerant. Assurance is mandatory. AI Software Toolkit connects standards, agent skills, and optional checks to revision-bound evidence. Published PR scorecard for {safe['repository']}: {safe['message']}.">
+  <meta name="description" content="AI is the accelerant. Assurance is mandatory. AI Engineering Guardrails connects standards, agent skills, and optional checks to revision-bound evidence. Published PR scorecard for {safe['repository']}: {safe['message']}.">
   <title>Latest PR Scorecard · {safe['repository']}</title>
   <style>{_REPORT_CSS}</style>
 </head>
@@ -2145,21 +2147,21 @@ def _html(metadata: dict[str, Any]) -> str:
 <a class="skip-link" href="#scorecard">Skip to scorecard</a>
 <header class="topbar"><div class="shell">
   <div class="brand"><span class="brand-mark" aria-hidden="true">AI</span><div>
-    <span class="brand-name">AI Software Toolkit</span><span class="repository">{safe['repository']}</span>
+    <span class="brand-name">AI Engineering Guardrails</span><span class="repository">{safe['repository']}</span>
   </div></div>
   <a class="repo-link" href="https://github.com/{safe['repository']}">View repository <span aria-hidden="true">↗</span></a>
 </div></header>
 <main class="shell">
   <section class="toolkit-overview" aria-labelledby="toolkit-title">
-    <p class="eyebrow">AI Software Toolkit / standards, skills, and verification</p>
+    <p class="eyebrow">AI Engineering Guardrails / standards, skills, and verification</p>
     <h1 id="toolkit-title">AI is the accelerant.<br>Assurance is mandatory.</h1>
     <p class="intro">AI turns directives into code faster than ever. Build assurance into
-      the work before changes ship. AI Software Toolkit provides the foundation:
+      the work before changes ship. AI Engineering Guardrails provides the foundation:
       clear standards, controlled agent skills, and checks connected to evidence.</p>
     <p class="overview-promise"><strong>Your directives. Disciplined execution. Evidence before release.</strong></p>
-    <nav class="overview-actions" aria-label="Explore AI Software Toolkit">
-      <a class="button primary" href="https://github.com/ravisingh11/ai-software-toolkit#start-here">Start building assurance <span aria-hidden="true">↗</span></a>
-      <a class="button" href="https://github.com/ravisingh11/ai-software-toolkit/tree/main/skills">Browse skills</a>
+    <nav class="overview-actions" aria-label="Explore AI Engineering Guardrails">
+      <a class="button primary" href="https://github.com/ravisingh11/ai-engineering-guardrails#start-here">Start building assurance <span aria-hidden="true">↗</span></a>
+      <a class="button" href="https://github.com/ravisingh11/ai-engineering-guardrails/tree/main/skills">Browse skills</a>
       <a class="button" href="https://github.com/ravisingh11/ai-software-toolkit-reference-app">Explore the reference app</a>
       <a href="#scorecard">View this repository’s scorecard ↓</a>
     </nav>

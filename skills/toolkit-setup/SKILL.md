@@ -1,6 +1,6 @@
 ---
 name: "toolkit-setup"
-description: "Set up or refresh AI Software Toolkit in a repository through the ai-toolkit CLI: discover the project, preview the installation, apply Proof, skills, and QA bootstrap, then verify with doctor and check. Use when asked to install, set up, onboard, upgrade, or diagnose the toolkit or Proof."
+description: "Set up or refresh AI Engineering Guardrails in a repository through the ai-toolkit CLI: discover the project, preview the installation, apply Proof, skills, and QA bootstrap, then verify with doctor and check. Use when asked to install, set up, onboard, upgrade, or diagnose the toolkit or Proof."
 ---
 
 # Toolkit Setup
